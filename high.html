@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>EFG Bad Mergentheim - Predigt-Livestream</title>
+  <link href="https://vjs.zencdn.net/7.8.2/video-js.css" rel="stylesheet" />
+  <!--  <link rel="stylesheet" href="https://cdn.rawgit.com/Chalarangelo/mini.css/v3.0.1/dist/mini-default.min.css">-->
+  <script src="https://vjs.zencdn.net/7.8.2/video.js"></script>
+  <style type="text/css">
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .breakpoints, .video-js, table {
+      margin: 1em 0;
+    }
+
+    table {
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0.5em 1em;
+    }
+
+    tbody tr {
+      color: #999;
+    }
+
+    tbody tr:first-child {
+      color: #000;
+    }
+
+    .breakpoints div {
+      background-color: red;
+      color: white;
+      padding: 0.5em 1em;
+    }
+
+    @media (max-width: 210px) {
+      .breakpoints .tiny {
+        background-color: green;
+      }
+    }
+
+    @media (min-width: 211px) and (max-width: 320px) {
+      .breakpoints .x-small {
+        background-color: green;
+      }
+    }
+
+    @media (min-width: 321px) and (max-width: 425px) {
+      .breakpoints .small {
+        background-color: green;
+      }
+    }
+
+    @media (min-width: 426px) and (max-width: 768px) {
+      .breakpoints .medium {
+        background-color: green;
+      }
+    }
+
+    @media (min-width: 769px) and (max-width: 1440px) {
+      .breakpoints .large {
+        background-color: green;
+      }
+    }
+
+    @media (min-width: 1441px) and (max-width: 2560px) {
+      .breakpoints .x-large {
+        background-color: green;
+      }
+    }
+
+    @media (min-width: 2561px) {
+      .breakpoints .huge {
+        background-color: green;
+      }
+    }
+  </style>
+</head>
+<body>
+  <p>
+  </p>
+  <p>
+  </p>
+  <p>
+  </p>
+  <video-js
+    class="vjs-fluid"
+    controls
+    preload="auto"
+    poster="./posters/livestream.jpg" data-setup='{"liveui": true}'>
+	  <!-- <source src="2020-06-28-godi.mp4" type="video/mp4">-->
+    <source src="stream_1.m3u8" type="application/x-mpegURL">
+    <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+  </video-js>
+
+
+  <script>
+    var vid = document.querySelector('video-js');
+    var player = videojs(vid, {responsive: true,
+  html5: {
+    hls: {
+      overrideNative: true
+    },
+    nativeAudioTracks: false,
+    nativeVideoTracks: false,
+  }
+});
+    var tbody = document.querySelector('table tbody');
+
+    player.on('playerresize', function() {
+      var values = {
+        breakpoint: player.currentBreakpoint(),
+        className: player.el().className.match(/vjs-layout-([a-z\-]+)/)[0],
+        playerWidth: player.currentWidth()
+      };
+
+      videojs.log('playerresize', values);
+
+      var tr = document.createElement('tr');
+
+      tr.innerHTML = '<td>' +
+        values.className +
+        '</td><td>' +
+        values.playerWidth +
+        '</td>';
+
+      tbody.insertBefore(tr, tbody.firstChild);
+    });
+  </script>
+<a href="../index.html" class="button primary large">Zurück</a><br>
+</body>
+</html>

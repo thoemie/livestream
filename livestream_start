@@ -1,0 +1,62 @@
+#!/bin/bash
+
+cd /var/www/html/livestream
+
+archive_date=$(stat -c %y /hls/master.m3u8 | awk '{print $1}')
+
+counter=1;for i in $dir/$archive_date* ; do (( counter++ )); done
+
+dir=/var/www/html/livestream/archive
+archive_dir=$dir/$archive_date-$counter
+echo $archive_dir
+echo "Livestream-Programm"
+
+
+
+echo "Alte Stream-Dateien nach /hls/archive/ verschieben? [y|n]"
+
+read clean_all
+
+if [[ $clean_all == "y" || $clean_all == "yes" ]]; then
+	
+        stat $dir/stream* &> /dev/null
+
+	if [[ $? -eq "0" ]]; then 
+		
+		mkdir $archive_dir \
+		&& cp -rp /hls/stream_{0,1,2}* $archive_dir \
+		&& rm -rf /hls/stream_{0,1,2}* 
+	fi
+fi
+
+[[ $? -eq 0 ]] || exit
+
+echo "Streaming-Server starten? [y|n]"
+
+read start_stream
+
+if [[ $start_stream == "y" ]]; then
+	./ffmpeg_server.sh
+	sleep 5
+fi
+
+
+
+#echo "Jetzt Streaming (Upload) vom OBS-Programm starten..."
+#
+#echo "Läuft das Streaming [y|n]?"
+#
+#read obs_started
+#
+#if [[ $obs_started == "y" ]]; then
+#
+#	echo "Aufnahme des Streams .mp4 und .mp3 starten?"
+#
+#	read start_record
+#
+#	if [[ $start_record == "y" ]]; then
+#	/hls/ffmpeg_recorder.sh
+#	fi
+#
+##watch -n 1 'ps -ef | grep [f]fmpeg'
+#fi
