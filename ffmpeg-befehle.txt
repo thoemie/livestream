@@ -1,0 +1,3 @@
+# im Nachhinein HLS-Playliste zu mp4 bzw. mp3 "aufnehmen"
+ffmpeg -i https://ap372web.estomihi.de/livestream/stream_0.m3u8 -codec copy out.mp4
+ffmpeg -i https://ap372web.estomihi.de/livestream/stream_2.m3u8 -q:a 0 -map a out.mp3
